@@ -29,3 +29,5 @@ outinfo/*
 
 # 公开项目忽略文件 .请参考对应.back文件补充
 manifest.json
+keys/*
+!keys/*.back

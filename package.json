@@ -40,7 +40,6 @@
     "test:ios": "cross-env UNI_PLATFORM=app-plus UNI_OS_NAME=ios jest -i",
     "test:mp-baidu": "cross-env UNI_PLATFORM=mp-baidu jest -i",
     "test:mp-weixin": "cross-env UNI_PLATFORM=mp-weixin jest -i",
-    
     "ci-publish": "node ci-publish.js"
   },
   "dependencies": {
@@ -92,6 +91,7 @@
     "miniprogram-api-typings": "*",
     "ora": "^3.4.0",
     "postcss-comment": "^2.0.0",
+    "require-json5": "^1.1.0",
     "sass": "^1.34.0",
     "sass-loader": "10.1.1",
     "vue-template-compiler": "^2.6.11"

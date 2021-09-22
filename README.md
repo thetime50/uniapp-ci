@@ -72,3 +72,9 @@ transpileDependencies无效怎么办
 ### 3 git relog
 
 git rtelog命令查看操作历史还原reset命令删除的提交
+
+### 4 导入manifest.json 报错
+require('./src/manifest.json')报错  
+需要使用json5解析  
+[require-json5](https://www.npmjs.com/package/require-json5)
+

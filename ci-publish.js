@@ -10,7 +10,7 @@
  * 5. sourceMap 保存
  * 6. git 对比
  * 7. 进度条
- * 8. 版本号自增加 版本号确认
+ * 8. 版本号自增加 版本号确认 git tag
  * 9. 依赖更新检查
  * 
  */
@@ -21,6 +21,7 @@ const pfs = require('fs/promises')
 const path = require('path')
 const {exec,spawn} = require('child_process') // 命令行执行
 const program = require('commander') // 命令行参数提示
+var requireJSON5 = require('require-json5'); // 导入json5文件
 // const minimist = require('minimist') // 命令行参数解析 解析process.argv
 require('colors') // 命令行输出颜色 // cli-color
 
@@ -36,6 +37,7 @@ function delay(ms) {
 }
 
 async function projBuildProcess() {
+    console.log(`*** projBuildProcess ***`.blue.bgWhite,)
     // const spinner = ora('project building...')
     // spinner.start()
     // exec方法默认的最大允许输出到stdout和stderr的数据量不超过200K，如果超过了，子进程就会被杀死
@@ -81,16 +83,29 @@ async function projBuildProcess() {
 
 
 async function weiXinCi(){
+    console.log(`*** weiXinCi ***`.blue.bgWhite,)
     const ci = require('miniprogram-ci')
-    const appid = require('./src/manifest.json')[APP_PLATFORM].appid
+    const platform = requireJSON5('./src/manifest.json')[APP_PLATFORM]
     // todo
     const project = new ci.Project({
-        appid: appid,
+        appid: platform.appid,
         type: 'miniProgram',
         projectPath: 'dist/dev/mp-weixin',
-        privateKeyPath: 'the/path/to/privatekey',
+        privateKeyPath: 'keys/wx-private.key',
         ignores: ['node_modules/**/*'],
     })
+    console.log(`ci.Project`.blue.bgWhite,project)
+    const uploadResult = await ci.upload({
+        project,
+        version: '0.0.3',
+        desc: 'hello',
+        setting:{ // https://developers.weixin.qq.com/miniprogram/dev/devtools/ci.html#编译设置
+            es6:platform.setting,
+            minify:platform.minified,
+        },
+        onProgressUpdate: console.log,
+    })
+    console.log(`ci.upload`.blue.bgWhite,uploadResult)
 }
 
 
@@ -98,12 +113,13 @@ async function weiXinCi(){
  * 
  * 
  */
-const method = {
+const methods = {
     projBuild: projBuildProcess,
     ci:weiXinCi,
 }
 
 ;
 (async function main(){
-    await method.projBuild()
+    await methods.projBuild()
+    await methods.ci()
 })()
