@@ -1,0 +1,95 @@
+{
+	"easycom": {
+		"autoscan": true,
+		"custom": {
+			// uni-ui 规则如下配置
+			"^uni-(.*)": "@dcloudio/uni-ui/lib/uni-$1/uni-$1.vue"
+		}
+	},
+	"pages": [
+		{
+			"path": "pages/home/home",
+			"style": {
+				"navigationBarTitleText": "首页",
+				"navigationStyle":"custom"
+			}
+		},
+		{
+			"path": "pages/pg1/pg1",
+			"style": {
+				"navigationBarTitleText": "pg1",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/pg2/pg2",
+			"style": {
+				"navigationBarTitleText": "pg2",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/pg3/pg3",
+			"style": {
+				"navigationBarTitleText": "pg3",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/user/index", //用户中心
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom"
+			}
+		},
+		/**********  测试页面  *************/
+		{
+			"path": "pages/test/iconPreview", //icon预览
+			"style": {
+				"navigationBarTitleText": "icon预览"
+			}
+		}
+	],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "uniapp-ci",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8"
+	},
+	"tabBar": {
+		"color": "#1A1A1A",
+		"selectedColor": "#3062F2",
+		"borderStyle":"white",
+		"list": [{
+				"pagePath": "pages/home/home",
+				"iconPath": "static/image/home.png",
+				"selectedIconPath": "static/image/home-o.png",
+				"text": "首页"
+			},
+			{
+				"pagePath": "pages/pg1/pg1",
+				"iconPath": "static/image/sku.png",
+				"selectedIconPath": "static/image/sku-o.png",
+				"text": "pg1"
+			},
+			{
+				"pagePath": "pages/pg2/pg2",
+				"iconPath": "static/image/dr.png",
+				"selectedIconPath": "static/image/dr-o.png",
+				"text": "pg2"
+			},
+			{
+				"pagePath": "pages/pg3/pg3",
+				"iconPath": "static/image/live.png",
+				"selectedIconPath": "static/image/live-o.png",
+				"text": "pg3"
+			},
+			{
+				"pagePath": "pages/user/index",
+				"iconPath": "static/image/mine.png",
+				"selectedIconPath": "static/image/mine-o.png",
+				"text": "我的"
+			}
+		]
+	}
+}
