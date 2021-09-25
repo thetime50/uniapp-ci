@@ -34,10 +34,71 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 [微信小程序 开发辅助 /CI](https://developers.weixin.qq.com/miniprogram/dev/devtools/ci.html)  
 
 [如何在nodejs里调用执行系统命令](https://www.webhek.com/post/execute-a-command-line-binary-with-node-js.html)  
-[Node child_process](https://nodejs.org/api/child_process.html)
+[Node child_process](https://nodejs.org/api/child_process.html)  
 [difference between childprocess close exit events](https://stackoverflow.com/questions/37522010/difference-between-childprocess-close-exit-events)  
    'exit' emits when the child exits but the stdio are not yet closed. 'close' emits when the child has exited and its stdios are closed.  
-[nodejs在spawn中执行npm报错 [Error: spawn ENOENT]” errors](https://www.cnblogs.com/xiziyin/p/3578905.html)
+[nodejs在spawn中执行npm报错 [Error: spawn ENOENT]” errors](https://www.cnblogs.com/xiziyin/p/3578905.html)  
+[ANSI转义序列](https://zh.wikipedia.org/wiki/ANSI%E8%BD%AC%E4%B9%89%E5%BA%8F%E5%88%97)
+### git
+
+git-repo
+git-clone
+
+github 搜索前2
+
+**@semantic-release/git**
+
+https://www.npmjs.com/package/@semantic-release/git  
+是个包装过git用于项目发布的命令行工具  
+不符合ci项目
+
+**nodegit**
+
+https://github.com/nodegit/nodegit
+
+**js-git**
+
+https://github.com/creationix/js-git  
+使用纯JavaScript实现Git客户端和服务器端的开源项目
+使用起来太复杂了
+
+
+**git**  
+
+https://github.com/christkv/node-git  
+没什么文档  
+参考ruby的grit rugged
+https://github.com/nodegit/nodegit/issues/1840#issuecomment-830441394
+
+**simple-git**
+
+https://github.com/steveukx/git-js
+
+
+
+//////
+
+[Git 合并时 --no-ff 的作用](https://blog.csdn.net/zombres/article/details/82179122)  
+git merge --no-ff feature
+
+
+
+使用nodegit 报错
+```cmd
+npm ERR! code 1
+npm ERR! path D:\1024\web\test\node_modules\nodegit
+npm ERR! command failed
+npm ERR! command C:\Windows\system32\cmd.exe /d /s /c node-gyp rebuild
+npm ERR! gyp info it worked if it ends with ok
+npm ERR! gyp info using node-gyp@4.0.0
+npm ERR! gyp info using node@16.5.0 | win32 | x64
+npm ERR! (node:19808) [DEP0150] DeprecationWarning: Setting process.config is deprecated. In the future the property will be read-only.
+npm ERR! (Use `node --trace-deprecation ...` to show where the warning was created)
+npm ERR! gyp info spawn E:\Python27\python2.EXE
+```
+https://github.com/nodejs/node-gyp#on-windows  
+https://github.com/nodegit/nodegit/issues/1840#issuecomment-830441394  
+
 
 // todo 
 - gitlab-ci

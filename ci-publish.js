@@ -21,9 +21,15 @@ const pfs = require('fs/promises')
 const path = require('path')
 const {exec,spawn} = require('child_process') // 命令行执行
 const program = require('commander') // 命令行参数提示
+const inquirer = require('inquirer') // 命令行交互
 var requireJSON5 = require('require-json5'); // 导入json5文件
 // const minimist = require('minimist') // 命令行参数解析 解析process.argv
-require('colors') // 命令行输出颜色 // cli-color
+const logSymbols = require('log-symbols')
+require('colors') // 命令行输出颜色 // cli-color // todo colors-plue 参考 chalk
+// shelljs?
+
+const simpleGit = require( 'simple-git');
+
 
 const args = require('minimist')(process.argv.slice(2))
 // console.log('hello'.blue.bgWhite)
@@ -81,6 +87,26 @@ async function projBuildProcess() {
     // console.log('')
 }
 
+async function gitCheck(){
+
+    const options = {
+        binary: 'git',
+        maxConcurrentProcesses: 6,
+    };
+
+    // when setting all options in a single object
+    const git = simpleGit(process.cwd(), options);
+    // logSymbols
+    // 在主分支上
+    const branch = await git.branchLocal()
+    if(branch.current != 'main' && branch.current != 'master'){
+        let msg = `branch is ${branch.current.cyan} not main or master`
+        console.log(msg,logSymbols.error)
+        throw new Error(msg)
+    }
+    const diff = await git.diff()
+    console.log('aa',diff )
+}
 
 async function weiXinCi(){
     console.log(`*** weiXinCi ***`.blue.bgWhite,)
@@ -115,11 +141,13 @@ async function weiXinCi(){
  */
 const methods = {
     projBuild: projBuildProcess,
+    gitCheck:gitCheck,
     ci:weiXinCi,
 }
 
 ;
 (async function main(){
-    await methods.projBuild()
-    await methods.ci()
+    // await methods.projBuild()
+    await methods.gitCheck()
+    // await methods.ci()
 })()
