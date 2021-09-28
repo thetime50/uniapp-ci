@@ -30,6 +30,12 @@ require('colors') // 命令行输出颜色 // cli-color // todo colors-plue 参�
 
 const simpleGit = require( 'simple-git');
 
+// const ansiTrim = require('npm/lib/utils/ansi-trim.js')
+const ansiTrimRe = new RegExp('\x1b(?:\\[(?:\\d+[ABCDEFGJKSTm]|\\d+;\\d+[Hfm]|' +
+          '\\d+;\\d+;\\d+m|6n|s|u|\\?25[lh])|\\w)', 'g')
+const ansiTrim = str => str.replace(ansiTrimRe, '')
+const table = require('text-table')
+// const styles = require('ansistyles')
 
 const args = require('minimist')(process.argv.slice(2))
 // console.log('hello'.blue.bgWhite)
@@ -43,6 +49,8 @@ function delay(ms) {
 }
 
 async function gitCheck(){
+    console.log(`*** gitCheck ***`.blue.bgWhite,)
+
     let spinner
     try{
         const options = {
@@ -59,7 +67,7 @@ async function gitCheck(){
         if(branch.current != 'main' && branch.current != 'master'){
             let msg = `branch is ${branch.current.cyan} not main or master`
             spinner.stop()
-            console.log(msg,logSymbolserror)
+            console.log(msg,logSymbols.error)
             throw new Error(msg)
         }
         spinner.stop()
@@ -72,7 +80,7 @@ async function gitCheck(){
         // }catch(e) {
         //     let msg = 'git fetch error'
         //     spinner.stop()
-        //     console.log(msg,logSymbolserror)
+        //     console.log(msg,logSymbols.error)
         //     throw new Error(msg)
         // }
         // spinner.stop()
@@ -131,6 +139,165 @@ async function gitCheck(){
     }
 }
 
+async function npmOutdated(){
+    
+    console.log(`*** npmOutdated ***`.blue.bgWhite,)
+
+    let spinner
+
+    spinner = ora('npm outdated').start()
+    try{
+        let res = await getOutdatedDependencies()
+        res = Object.keys(res).reduce((t,key,i)=>{
+            if(res[key].wanted !== res[key].current){
+                const row = [
+                   res[key].name.red,
+                   res[key].current.white,
+                   res[key].wanted.green,
+                   res[key].latest.magenta,
+                   res[key].location,
+                   res[key].dependent,
+                ]
+
+                t.push(row)
+            }
+            return t
+        },[])
+        spinner.stop()
+        const head = ['name', 'current', 'wanted', 'latest',  'location', 'dependent by']
+        const tableOpts = {
+            align: ['l', 'r', 'r', 'r', 'l'],
+            stringLength: s => ansiTrim(s).length,
+        }
+            
+        if( Object.keys(res).length ){
+            console.log('有依赖需要更新:'.yellow)
+            console.log(table([head].concat(res), tableOpts))
+            // wating
+        }
+        // console.log('****'.red,res)
+    } catch(e){
+        spinner.stop()
+        throw e
+    }
+}
+
+// https://github.com/jens-duttke/check-outdated/blob/main/helper/dependencies.js
+/**
+ * Calls `npm outdated` to retrieve information about the outdated dependencies.
+ *
+ * @public
+ * @param {NpmOptions} options - Options which shall be appened to the `npm outdated` command-line call.
+ * @returns {Promise<OutdatedDependencies>} The original object returned by `npm outdated --json`.
+ */
+async function getOutdatedDependencies (options) {
+	return new Promise((resolve, reject) => {
+		exec([
+			'npm outdated --json',
+			'--long',
+			// '--save false',
+		].join(' '),
+        { stdio: ['pipe', 'pipe', 'ignore']}, // 屏蔽io流
+         (error, stdout) => {
+			if (error && stdout.length === 0) {
+				reject(error);
+
+				return;
+			}
+
+			const response = parseResponse(stdout);
+
+			if ('error' in response) {
+				reject(response.error);
+
+				return;
+			}
+
+			if (typeof response !== 'object' || response === null) {
+				reject(new TypeError('npm did not respond with an object.'));
+			}
+            // stdout.write('\033c'); // 清除控制台
+
+			resolve(prepareResponseObject(response));
+		});
+	});
+}
+/**
+ * Adds missing properties to the dependencies object.
+ *
+ * @private
+ * @param {{ readonly [dependencyName: string]: Partial<OutdatedDependency>; }} dependencies - The partial filled outdated dependency object.
+ * @returns {{ [dependencyName: string]: OutdatedDependency; }} The enriched outdated dependency object.
+ */
+function prepareResponseObject (dependencies) {
+	/** @type {{ [dependencyName: string]: OutdatedDependency; }} */
+	const outdatedDependencies = {};
+
+	for (const [name, dependency] of Object.entries(dependencies)) {
+		// Adding the name, makes it easier to work with the dependency object.
+		const outdatedDependency = {
+			...dependency,
+			name
+		};
+
+		for (const propertyName of ['current', 'wanted', 'latest', 'type']) {
+			if (!(propertyName in outdatedDependency)) {
+				outdatedDependency[propertyName] = '';
+			}
+		}
+
+		/**
+		 * Sometimes, npm returns an empty `location` string. So we add it.
+		 *
+		 * @todo We should try to resolve the path on the same way as npm is doing it.
+		 *
+		 * @see path.relative(process.cwd(), require.resolve(name));
+		 * @see module.path
+		 */
+		if (!outdatedDependency.location) {
+			outdatedDependency.location = `node_modules/${name}`;
+		}
+
+		outdatedDependencies[name] = /** @type {OutdatedDependency} */(outdatedDependency);
+	}
+
+	return outdatedDependencies;
+}
+
+/**
+ * Parse the stdout of `npm outdated --json` and convert it into an `object`.
+ *
+ * @private
+ * @param {string} stdout - Response of `npm outdated --json`.
+ * @returns {any} The parsed response, or an `object` containing an `error` property.
+ */
+function parseResponse (stdout) {
+	try {
+		const response = JSON.parse(stdout || '{}');
+
+		if (typeof response !== 'object' || response === null) {
+			throw new Error('Unexpected JSON response');
+		}
+
+		return response;
+	}
+	catch (error) {
+		if (error instanceof Error) {
+			return {
+				error: {
+					message: error.message,
+					stack: error.stack,
+					source: stdout
+				}
+			};
+		}
+
+		return {
+			message: (typeof error === 'string' ? error : 'Unknown error'),
+			source: stdout
+		};
+	}
+}
 async function projBuildProcess() {
     console.log(`*** projBuildProcess ***`.blue.bgWhite,)
     // const spinner = ora('project building...')
@@ -209,13 +376,15 @@ async function weiXinCi(){
  */
 const methods = {
     gitCheck:gitCheck,
+    npmOutdated:npmOutdated,
     projBuild: projBuildProcess,
     ci:weiXinCi,
 }
 
 ;
 (async function main(){
-    await methods.gitCheck()
+    // await methods.gitCheck()
+    await methods.npmOutdated()
     // await methods.projBuild()
     // await methods.ci()
 })()
