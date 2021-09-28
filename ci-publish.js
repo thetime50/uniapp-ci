@@ -42,51 +42,6 @@ function delay(ms) {
     })
 }
 
-async function projBuildProcess() {
-    console.log(`*** projBuildProcess ***`.blue.bgWhite,)
-    // const spinner = ora('project building...')
-    // spinner.start()
-    // exec方法默认的最大允许输出到stdout和stderr的数据量不超过200K，如果超过了，子进程就会被杀死
-    // await new Promise((resolve,reject)=>{
-    //     exec(`npm run build:${APP_PLATFORM}`, (error, stdout, stderr) => {
-    //         resolve({error, stdout, stderr})
-    //     })
-    // }) 
-    await new Promise((resolve,reject)=>{
-        const build = spawn(process.platform === "win32" ? "npm.cmd" : "npm", ['run', `build:${APP_PLATFORM}`], {
-            stdio: [
-                process.stdin, // Use parent’s stdin for child
-                process.stdout, // Pipe child’s stdout to parent
-                fs.openSync('./outinfo/err.out', 'w') // Direct child’s stderr to a file
-            ]
-        })
-        build.on('exit', (code, signal) => { // signal 终止子进程的信号
-            console.log('exit'.blue.bgWhite, code, signal)
-            resolve({
-                event:'exit',
-                code, signal,
-            })
-        })
-        build.on('disconnect', (code) => {
-            console.log('disconnect'.blue.bgWhite, code)
-            reject({
-                event:'disconnect',
-                code,
-            })
-        })
-        build.on('error', (err) => {
-            console.log('error'.blue.bgWhite, err)
-            reject({
-                event:'error',
-                err,
-            })
-        })
-    }) 
-    // await delay(3000)
-    // spinner.stop()
-    // console.log('')
-}
-
 async function gitCheck(){
     let spinner
     try{
@@ -176,6 +131,51 @@ async function gitCheck(){
     }
 }
 
+async function projBuildProcess() {
+    console.log(`*** projBuildProcess ***`.blue.bgWhite,)
+    // const spinner = ora('project building...')
+    // spinner.start()
+    // exec方法默认的最大允许输出到stdout和stderr的数据量不超过200K，如果超过了，子进程就会被杀死
+    // await new Promise((resolve,reject)=>{
+    //     exec(`npm run build:${APP_PLATFORM}`, (error, stdout, stderr) => {
+    //         resolve({error, stdout, stderr})
+    //     })
+    // }) 
+    await new Promise((resolve,reject)=>{
+        const build = spawn(process.platform === "win32" ? "npm.cmd" : "npm", ['run', `build:${APP_PLATFORM}`], {
+            stdio: [
+                process.stdin, // Use parent’s stdin for child
+                process.stdout, // Pipe child’s stdout to parent
+                fs.openSync('./outinfo/err.out', 'w') // Direct child’s stderr to a file
+            ]
+        })
+        build.on('exit', (code, signal) => { // signal 终止子进程的信号
+            console.log('exit'.blue.bgWhite, code, signal)
+            resolve({
+                event:'exit',
+                code, signal,
+            })
+        })
+        build.on('disconnect', (code) => {
+            console.log('disconnect'.blue.bgWhite, code)
+            reject({
+                event:'disconnect',
+                code,
+            })
+        })
+        build.on('error', (err) => {
+            console.log('error'.blue.bgWhite, err)
+            reject({
+                event:'error',
+                err,
+            })
+        })
+    }) 
+    // await delay(3000)
+    // spinner.stop()
+    // console.log('')
+}
+
 async function weiXinCi(){
     console.log(`*** weiXinCi ***`.blue.bgWhite,)
     const ci = require('miniprogram-ci')
@@ -208,14 +208,14 @@ async function weiXinCi(){
  * 
  */
 const methods = {
-    projBuild: projBuildProcess,
     gitCheck:gitCheck,
+    projBuild: projBuildProcess,
     ci:weiXinCi,
 }
 
 ;
 (async function main(){
-    // await methods.projBuild()
     await methods.gitCheck()
+    // await methods.projBuild()
     // await methods.ci()
 })()
