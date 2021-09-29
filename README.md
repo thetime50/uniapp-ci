@@ -38,7 +38,9 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 [difference between childprocess close exit events](https://stackoverflow.com/questions/37522010/difference-between-childprocess-close-exit-events)  
    'exit' emits when the child exits but the stdio are not yet closed. 'close' emits when the child has exited and its stdios are closed.  
 [nodejs在spawn中执行npm报错 [Error: spawn ENOENT]” errors](https://www.cnblogs.com/xiziyin/p/3578905.html)  
-[ANSI转义序列](https://zh.wikipedia.org/wiki/ANSI%E8%BD%AC%E4%B9%89%E5%BA%8F%E5%88%97)
+[ANSI转义序列](https://zh.wikipedia.org/wiki/ANSI%E8%BD%AC%E4%B9%89%E5%BA%8F%E5%88%97)  
+[依赖更新检查参考 check-outdated](https://github.com/jens-duttke/check-outdated/blob/main/helper/dependencies.js)
+
 ### git
 
 git-repo
@@ -139,3 +141,5 @@ require('./src/manifest.json')报错
 需要使用json5解析  
 [require-json5](https://www.npmjs.com/package/require-json5)
 
+### 5 如何在Github上删除Release或Tag
+[如何在Github上删除Release或Tag](https://www.maixj.net/ict/release-tag-22821)

@@ -1,3 +1,4 @@
+"use strict";
 
 /**
  * 1. - 命令行参数
@@ -75,35 +76,36 @@ async function gitCheck(){
         spinner.stop()
         console.log('branch is '+ branch.current,logSymbols.success)
 
-        // 获取更新远端跟踪分支
-        spinner = ora('git fetch origin').start()
-        try{
-            await git.fetch('origin')
-        }catch(e) {
-            let msg = 'git fetch error'
-            spinner.stop()
-            console.log(msg,logSymbols.error)
-            throw new Error(msg)
-        }
-        spinner.stop()
-        console.log('git fetch ok',logSymbols.success)
+        // // 获取更新远端跟踪分支
+        // spinner = ora('git fetch origin').start()
+        // try{
+        //     await git.fetch('origin')
+        // }catch(e) {
+        //     let msg = 'git fetch error'
+        //     spinner.stop()
+        //     console.log(msg,logSymbols.error)
+        //     throw new Error(msg)
+        // }
+        // spinner.stop()
+        // console.log('git fetch ok',logSymbols.success)
 
-        const diff = await git.diff('remotes/origin/'+branch.current)
-        spinner = ora('check idff').start()
-        if(diff){
-            let msg = `There are file that have not been commit`
-            spinner.stop()
-            console.log(msg,logSymbols.error)
-            throw new Error(msg)
-        }
-        spinner.stop()
-        console.log(`diff remotes/origin/${branch.current} ok`,logSymbols.success)
+        // // 检查当前分支已提交到远端
+        // const diff = await git.diff('remotes/origin/'+branch.current)
+        // spinner = ora('check idff').start()
+        // if(diff){
+        //     let msg = `There are file that have not been commit`
+        //     spinner.stop()
+        //     console.log(msg,logSymbols.error)
+        //     throw new Error(msg)
+        // }
+        // spinner.stop()
+        // console.log(`diff remotes/origin/${branch.current} ok`,logSymbols.success)
 
         
         // git tag -n --sort=taggerdate 
         // const tages = await git.tags() // 按字母顺序排序
-        // const tages = await git.tags('-n',{'--sort': 'taggerdate'}) // 按打tag的时间从旧到新排序的
-        const tages = await git.tags('-n',{'--sort': 'committerdate'}) // 按提交时间从旧到新排序的
+        const tages = await git.tags('-n',{'--sort': '-taggerdate'}) // 按打tag的时间从旧到新排序的
+        // const tages = await git.tags('-n',{'--sort': '-committerdate'}) // 按提交时间从旧到新排序的
         const lastTag =tages.all.find((v,i,a)=>{
             // https://docs.npmjs.com/cli/v6/configuring-npm/package-json#version
             return /^v?(\d+\.)+\d+(-.*)?\b$/.test( v)
@@ -116,28 +118,36 @@ async function gitCheck(){
                 type: 'input',
                 message: '输入版本号:',
                 name: 'tag',
-                default: newTage // 默认值
+                default: newTage, // 默认值
+                validate (val) {
+                    if (tages.all.includes(val)) {
+                        return '版本号重复'
+                    }
+                    return true
+                },
             },
             {
                 type: 'input',
                 message: '输入更新信息：',
                 name: 'message',
                 validate(val){
-                    if(val){
-                        return true
+                    if(!val){
+                        return '请输入更新信息'
                     }
-                    return '请输入更新信息'
+                    return true
                 },
             }
         ])
+        
+        spinner = ora('set tag and push remote').start()
+        APP_VERSION = tagParam.tag
         await git.tag(['-a',tagParam.tag,'-m',`"${tagParam.message}"`])
-
-            
-        console.log('aa',tages )
-        console.log()
-
+        // tag 提交到远端
+        await git.push('--tags')
+        spinner.stop()
     }catch(e){
         // throw e
+        console.error(e) // message
         process.exit()
     }
 }
@@ -200,7 +210,6 @@ async function npmOutdated(){
     }
 }
 
-// https://github.com/jens-duttke/check-outdated/blob/main/helper/dependencies.js
 /**
  * Calls `npm outdated` to retrieve information about the outdated dependencies.
  *
@@ -365,6 +374,7 @@ async function weiXinCi(){
     console.log(`*** 微信小程序ci发布 ***`.blue.bgWhite,)
     const ci = require('miniprogram-ci')
     const platform = requireJSON5('./src/manifest.json')[APP_PLATFORM]
+    const robot = 1
     // todo
     const project = new ci.Project({
         appid: platform.appid,
@@ -383,8 +393,16 @@ async function weiXinCi(){
             minify:platform.minified,
         },
         onProgressUpdate: console.log,
+        robot,
     })
-    console.log(`ci.upload`.blue.bgWhite,uploadResult)
+    console.log(`完成应用代码上传`.blue.bgWhite,uploadResult)
+    const destPath = `./outinfo/source-map-${APP_VERSION}.zip`
+    const sourceMapRes = await ci.getDevSourceMap({
+        project,
+        robot,
+        sourceMapSavePath: destPath
+    })
+    console.log(`sourceMap 路径：`.blue.bgWhite, destPath)
 }
 
 
@@ -405,4 +423,5 @@ const methods = {
     await methods.npmOutdated()
     await methods.projBuild()
     await methods.ci()
+    console.log('应用发布完成'.bold)
 })()

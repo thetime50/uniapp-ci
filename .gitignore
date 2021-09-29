@@ -24,8 +24,7 @@ pnpm-debug.log*
 *.sw*
 
 # 如果文件的父目录被忽略，那么这个文件就不能被重新包含
-outinfo/*
-!outinfo/.gitkeep
+outinfo/err.out
 
 # 公开项目忽略文件 .请参考对应.back文件补充
 manifest.json
