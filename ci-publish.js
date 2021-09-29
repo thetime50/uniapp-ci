@@ -1,7 +1,7 @@
 "use strict";
 
 /**
- * 1. - 命令行参数
+ * 1. 命令行参数
  * 2. √ 命令行交互
  * 3. √ 执行编译
  *      3.1 √ child_process执行
@@ -14,6 +14,7 @@
  * 8. √ 版本号自增加 版本号确认 git tag
  * 9. √ 依赖更新检查
  * 10. 打包npm 包
+ * 11. code review class
  */
 
 const ora = require('ora') // 进度条
@@ -195,7 +196,7 @@ async function npmOutdated(){
             }])
             
             if (answers.publish !== 'publish'){
-                console.log(`\n退出发布，请执行${'npm update '.yellow}'更新依赖并重新提交代码`)
+                console.log(`\n退出发布，请执行${'npm update '.yellow}更新依赖并重新提交代码`)
                 process.exit()
             }else{
                 console.log('继续发布应用...')
