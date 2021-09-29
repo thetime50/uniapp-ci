@@ -84,24 +84,6 @@ https://github.com/steveukx/git-js
 git merge --no-ff feature
 
 
-
-使用nodegit 报错
-```cmd
-npm ERR! code 1
-npm ERR! path D:\1024\web\test\node_modules\nodegit
-npm ERR! command failed
-npm ERR! command C:\Windows\system32\cmd.exe /d /s /c node-gyp rebuild
-npm ERR! gyp info it worked if it ends with ok
-npm ERR! gyp info using node-gyp@4.0.0
-npm ERR! gyp info using node@16.5.0 | win32 | x64
-npm ERR! (node:19808) [DEP0150] DeprecationWarning: Setting process.config is deprecated. In the future the property will be read-only.
-npm ERR! (Use `node --trace-deprecation ...` to show where the warning was created)
-npm ERR! gyp info spawn E:\Python27\python2.EXE
-```
-https://github.com/nodejs/node-gyp#on-windows  
-https://github.com/nodegit/nodegit/issues/1840#issuecomment-830441394  
-
-
 // todo 
 - gitlab-ci
 ## 问题笔记
@@ -143,3 +125,38 @@ require('./src/manifest.json')报错
 
 ### 5 如何在Github上删除Release或Tag
 [如何在Github上删除Release或Tag](https://www.maixj.net/ict/release-tag-22821)
+
+### 6 使用nodegit 报错
+使用nodegit 报错
+```cmd
+npm ERR! code 1
+npm ERR! path D:\1024\web\test\node_modules\nodegit
+npm ERR! command failed
+npm ERR! command C:\Windows\system32\cmd.exe /d /s /c node-gyp rebuild
+npm ERR! gyp info it worked if it ends with ok
+npm ERR! gyp info using node-gyp@4.0.0
+npm ERR! gyp info using node@16.5.0 | win32 | x64
+npm ERR! (node:19808) [DEP0150] DeprecationWarning: Setting process.config is deprecated. In the future the property will be read-only.
+npm ERR! (Use `node --trace-deprecation ...` to show where the warning was created)
+npm ERR! gyp info spawn E:\Python27\python2.EXE
+```
+https://github.com/nodejs/node-gyp#on-windows  
+https://github.com/nodegit/nodegit/issues/1840#issuecomment-830441394  
+我们将在 0.28.0 中解决这个问题。
+
+### 7 npm 安装本地/github依赖包 
+[npm安装github包的方式](https://www.cnblogs.com/mybilibili/p/10482192.html)
+直接利用用户名和仓库名进行安装  
+npm install easterCat/kiana-js
+
+也可以在前面加上 github 前缀  
+npm install github:easterCat/kiana-js
+
+直接通过 git 上项目的地址进行安装  
+npm install git+https://github.com/easterCat/kiana-js.git
+
+或者以 ssh 的方式  
+npm install git+ssh://github.com/easterCat/kiana-js.git
+
+
+npm install &lt;folder&gt;
