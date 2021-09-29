@@ -21,7 +21,6 @@ const ora = require('ora') // 进度条
 const fs = require('fs')
 const pfs = require('fs/promises')
 const path = require('path')
-// const minimist = require('minimist') // 命令行参数解析 解析process.argv
 const {exec,spawn} = require('child_process') // 命令行程序执行
 const program = require('commander') // 命令行交互提示
 const inquirer = require('inquirer') // 命令行交互
@@ -33,14 +32,15 @@ require('colors') // 命令行输出颜色 // cli-color // todo colors-plue 参�
 const simpleGit = require( 'simple-git');
 
 // const ansiTrim = require('npm/lib/utils/ansi-trim.js')
-const ansiTrimRe = new RegExp('\x1b(?:\\[(?:\\d+[ABCDEFGJKSTm]|\\d+;\\d+[Hfm]|' +
-          '\\d+;\\d+;\\d+m|6n|s|u|\\?25[lh])|\\w)', 'g')
-const ansiTrim = str => str.replace(ansiTrimRe, '')
 const table = require('text-table')
 // const styles = require('ansistyles')
 
 const args = require('minimist')(process.argv.slice(2))
 // console.log('hello'.blue.bgWhite)
+
+const ansiTrimRe = new RegExp('\x1b(?:\\[(?:\\d+[ABCDEFGJKSTm]|\\d+;\\d+[Hfm]|' +
+          '\\d+;\\d+;\\d+m|6n|s|u|\\?25[lh])|\\w)', 'g')
+const ansiTrim = str => str.replace(ansiTrimRe, '')
 
 const APP_PLATFORM = 'mp-weixin'
 
