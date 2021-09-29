@@ -12,18 +12,18 @@
  * 7. √ 进度条
  * 8. √ 版本号自增加 版本号确认 git tag
  * 9. 依赖更新检查
- * 
+ * 10. 打包npm 包
  */
 
 const ora = require('ora') // 进度条
 const fs = require('fs')
 const pfs = require('fs/promises')
 const path = require('path')
+// const minimist = require('minimist') // 命令行参数解析 解析process.argv
 const {exec,spawn} = require('child_process') // 命令行程序执行
 const program = require('commander') // 命令行交互提示
 const inquirer = require('inquirer') // 命令行交互
 var requireJSON5 = require('require-json5'); // 导入json5文件
-// const minimist = require('minimist') // 命令行参数解析 解析process.argv
 const logSymbols = require('log-symbols')
 require('colors') // 命令行输出颜色 // cli-color // todo colors-plue 参考 chalk
 // shelljs?
@@ -42,6 +42,8 @@ const args = require('minimist')(process.argv.slice(2))
 
 const APP_PLATFORM = 'mp-weixin'
 
+let APP_VERSION = '0.0.0'
+
 function delay(ms) {
     return new Promise((resolve, reject) => {
         setTimeout(resolve, ms);
@@ -49,7 +51,7 @@ function delay(ms) {
 }
 
 async function gitCheck(){
-    console.log(`*** gitCheck ***`.blue.bgWhite,)
+    console.log(`*** git 仓库检查 ***`.blue.bgWhite,)
 
     let spinner
     try{
@@ -141,22 +143,20 @@ async function gitCheck(){
 
 async function npmOutdated(){
     
-    console.log(`*** npmOutdated ***`.blue.bgWhite,)
+    console.log(`*** 依赖更新检查 ***`.blue.bgWhite,)
 
-    let spinner
-
-    spinner = ora('npm outdated').start()
+    let spinner = ora('npm outdated').start()
     try{
         let res = await getOutdatedDependencies()
         res = Object.keys(res).reduce((t,key,i)=>{
             if(res[key].wanted !== res[key].current){
                 const row = [
-                   res[key].name.red,
-                   res[key].current.white,
-                   res[key].wanted.green,
-                   res[key].latest.magenta,
-                   res[key].location,
-                   res[key].dependent,
+                   res[key].name.red || '',
+                   res[key].current.white || '',
+                   res[key].wanted.green || '',
+                   res[key].latest.magenta || '',
+                   res[key].location || '',
+                   res[key].dependent || '',
                 ]
 
                 t.push(row)
@@ -171,9 +171,26 @@ async function npmOutdated(){
         }
             
         if( Object.keys(res).length ){
-            console.log('有依赖需要更新:'.yellow)
+            console.log('有依赖需要更新: '.yellow, logSymbols.warning)
             console.log(table([head].concat(res), tableOpts))
-            // wating
+            const answers = await inquirer.prompt([{
+                type: 'input',
+                name: 'publish',
+                message: [
+                    `请回车退出ci发布程序，执行 ${'npm update'.yellow} 更新依赖并重新提交代码`,
+                    `或者输入 publish 忽略依赖更新继续发布:`
+                ].join('\n'),
+                default: 'exit'
+            }])
+            
+            if (answers.publish !== 'publish'){
+                console.log(`\n退出发布，请执行${'npm update '.yellow}'更新依赖并重新提交代码`)
+                process.exit()
+            }else{
+                console.log('继续发布应用...')
+            }
+        }else{
+            console.log('outdated check', logSymbols.success)
         }
         // console.log('****'.red,res)
     } catch(e){
@@ -299,7 +316,7 @@ function parseResponse (stdout) {
 	}
 }
 async function projBuildProcess() {
-    console.log(`*** projBuildProcess ***`.blue.bgWhite,)
+    console.log(`*** 编译微信小程序 ***`.blue.bgWhite,)
     // const spinner = ora('project building...')
     // spinner.start()
     // exec方法默认的最大允许输出到stdout和stderr的数据量不超过200K，如果超过了，子进程就会被杀死
@@ -344,7 +361,7 @@ async function projBuildProcess() {
 }
 
 async function weiXinCi(){
-    console.log(`*** weiXinCi ***`.blue.bgWhite,)
+    console.log(`*** 微信小程序ci发布 ***`.blue.bgWhite,)
     const ci = require('miniprogram-ci')
     const platform = requireJSON5('./src/manifest.json')[APP_PLATFORM]
     // todo
