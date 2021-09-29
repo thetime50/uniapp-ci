@@ -75,29 +75,29 @@ async function gitCheck(){
         spinner.stop()
         console.log('branch is '+ branch.current,logSymbols.success)
 
-        // // 获取更新远端跟踪分支
-        // spinner = ora('git fetch origin').start()
-        // try{
-        //     await git.fetch('origin')
-        // }catch(e) {
-        //     let msg = 'git fetch error'
-        //     spinner.stop()
-        //     console.log(msg,logSymbols.error)
-        //     throw new Error(msg)
-        // }
-        // spinner.stop()
-        // console.log('git fetch ok',logSymbols.success)
+        // 获取更新远端跟踪分支
+        spinner = ora('git fetch origin').start()
+        try{
+            await git.fetch('origin')
+        }catch(e) {
+            let msg = 'git fetch error'
+            spinner.stop()
+            console.log(msg,logSymbols.error)
+            throw new Error(msg)
+        }
+        spinner.stop()
+        console.log('git fetch ok',logSymbols.success)
 
-        // const diff = await git.diff('remotes/origin/'+branch.current)
-        // spinner = ora('check idff').start()
-        // if(diff){
-        //     let msg = `There are file that have not been commit`
-        //     spinner.stop()
-        //     console.log(msg,logSymbols.error)
-        //     throw new Error(msg)
-        // }
-        // spinner.stop()
-        // console.log('diff remotes/origin/'+branch.current,logSymbols.success)
+        const diff = await git.diff('remotes/origin/'+branch.current)
+        spinner = ora('check idff').start()
+        if(diff){
+            let msg = `There are file that have not been commit`
+            spinner.stop()
+            console.log(msg,logSymbols.error)
+            throw new Error(msg)
+        }
+        spinner.stop()
+        console.log(`diff remotes/origin/${branch.current} ok`,logSymbols.success)
 
         
         // git tag -n --sort=taggerdate 
@@ -137,7 +137,8 @@ async function gitCheck(){
         console.log()
 
     }catch(e){
-        throw e
+        // throw e
+        process.exit()
     }
 }
 
@@ -400,8 +401,8 @@ const methods = {
 
 ;
 (async function main(){
-    // await methods.gitCheck()
+    await methods.gitCheck()
     await methods.npmOutdated()
-    // await methods.projBuild()
-    // await methods.ci()
+    await methods.projBuild()
+    await methods.ci()
 })()
