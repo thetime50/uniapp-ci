@@ -1217,6 +1217,14 @@
     "qrcode-terminal" "^0.12.0"
     "ws" "^7.2.3"
 
+"@dcloudio/uni-cli-i18n@^2.0.0-32920210927002":
+  "integrity" "sha1-u6x65B94HwixDJa6eRVC6Awxwyg="
+  "resolved" "https://registry.npmmirror.com/@dcloudio/uni-cli-i18n/download/@dcloudio/uni-cli-i18n-2.0.0-32920210927002.tgz"
+  "version" "2.0.0-32920210927002"
+  dependencies:
+    "i18n" "^0.13.3"
+    "os-locale-s-fix" "^1.0.8-fix-1"
+
 "@dcloudio/uni-cli-shared@^2.0.0-32920210927001":
   "integrity" "sha512-KSgn9wEyUvSOlEjbce0B7Lkrl4m5RgZue+Y9NxOli7dLQ+vf/Kl0W0yk9r16Suhx800zfY6xJ4HdzIOQEO0zug=="
   "resolved" "https://registry.npmjs.org/@dcloudio/uni-cli-shared/-/uni-cli-shared-2.0.0-32920210927001.tgz"
@@ -4081,6 +4089,13 @@
   "resolved" "https://registry.npmjs.org/binary-extensions/-/binary-extensions-2.2.0.tgz"
   "version" "2.2.0"
 
+"bindings@^1.5.0":
+  "integrity" "sha512-p2q/t/mhvuOj/UeLlV6566GD/guowlr0hHxClI0W9m7MWYkL1F0hLo+0Aexs9HSPCtR1SXQ0TD3MMKrXZajbiQ=="
+  "resolved" "https://registry.npmjs.org/bindings/-/bindings-1.5.0.tgz"
+  "version" "1.5.0"
+  dependencies:
+    "file-uri-to-path" "1.0.0"
+
 "bl@^4.1.0":
   "integrity" "sha512-1W07cM9gS6DcLperZfFSj+bWLtaPGSOHWhPiGzXmvVJbRLdG82sH/Kn8EtW1VqWVA54AKf2h5k5BbnIbwF3h6w=="
   "resolved" "https://registry.npmjs.org/bl/-/bl-4.1.0.tgz"
@@ -6566,6 +6581,11 @@
   "resolved" "https://registry.npmjs.org/file-type/-/file-type-9.0.0.tgz"
   "version" "9.0.0"
 
+"file-uri-to-path@1.0.0":
+  "integrity" "sha512-0Zt+s3L7Vf1biwWZ29aARiVYLx7iMGnEUl9x33fbB/j3jR81u/O2LbqK+Bm1CDSNDKVtJ/YjwY7TUd5SkeLQLw=="
+  "resolved" "https://registry.npmjs.org/file-uri-to-path/-/file-uri-to-path-1.0.0.tgz"
+  "version" "1.0.0"
+
 "filesize@^3.6.1":
   "integrity" "sha512-7KjR1vv6qnicaPMi1iiTcI85CyYwRO/PSFCu6SvqL8jN2Wjt/NIYQTFtFs7fSDCYOstUkEWIQGFUg5YZQfjlcg=="
   "resolved" "https://registry.npmjs.org/filesize/-/filesize-3.6.1.tgz"
@@ -6759,7 +6779,15 @@
   "resolved" "https://registry.npmjs.org/fs.realpath/-/fs.realpath-1.0.0.tgz"
   "version" "1.0.0"
 
-"fsevents@^1.2.7", "fsevents@^2.1.2", "fsevents@~2.3.2":
+"fsevents@^1.2.7":
+  "integrity" "sha512-oWb1Z6mkHIskLzEJ/XWX0srkpkTQ7vaopMQkyaEIoq0fmtFVxOthb8cCxeT+p3ynTdkk/RZwbgG4brR5BeWECw=="
+  "resolved" "https://registry.npmjs.org/fsevents/-/fsevents-1.2.13.tgz"
+  "version" "1.2.13"
+  dependencies:
+    "bindings" "^1.5.0"
+    "nan" "^2.12.1"
+
+"fsevents@^2.1.2", "fsevents@~2.3.2":
   "integrity" "sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA=="
   "resolved" "https://registry.npmjs.org/fsevents/-/fsevents-2.3.2.tgz"
   "version" "2.3.2"
@@ -7343,6 +7371,18 @@
   "resolved" "https://registry.npmjs.org/human-signals/-/human-signals-2.1.0.tgz"
   "version" "2.1.0"
 
+"i18n@^0.13.3":
+  "integrity" "sha1-WCD0jYenfPFOBkcZvum8aC7VUOs="
+  "resolved" "https://registry.nlark.com/i18n/download/i18n-0.13.3.tgz"
+  "version" "0.13.3"
+  dependencies:
+    "debug" "^4.1.1"
+    "make-plural" "^6.2.2"
+    "math-interval-parser" "^2.0.1"
+    "messageformat" "^2.3.0"
+    "mustache" "^4.0.1"
+    "sprintf-js" "^1.1.2"
+
 "iconv-lite@^0.4.24", "iconv-lite@^0.4.4", "iconv-lite@0.4.24":
   "integrity" "sha512-v3MXnZAcvnywkTUEZomIActle7RXXeedOR31wwl7VlyoXO4Qi9arvSenNQWne1TcRwhCL1HwLI21bEqdpj8/rA=="
   "resolved" "https://registry.npmjs.org/iconv-lite/-/iconv-lite-0.4.24.tgz"
@@ -7536,6 +7576,11 @@
   "version" "2.2.4"
   dependencies:
     "loose-envify" "^1.0.0"
+
+"invert-kv@^3.0.0":
+  "integrity" "sha1-qTx6PUOGodyDJbl9qbsWIMAoJSM="
+  "resolved" "https://registry.nlark.com/invert-kv/download/invert-kv-3.0.1.tgz"
+  "version" "3.0.1"
 
 "ip-regex@^2.1.0":
   "integrity" "sha1-+ni/XS5pE8kRzp+BnuUUa7bYROk="
@@ -8752,6 +8797,13 @@
     "chalk" "^2.3.0"
     "shell-quote" "^1.6.1"
 
+"lcid@^3.0.0":
+  "integrity" "sha1-kDDsR5oFj8NrXoJD66rItqxYL9A="
+  "resolved" "https://registry.npm.taobao.org/lcid/download/lcid-3.1.1.tgz"
+  "version" "3.1.1"
+  dependencies:
+    "invert-kv" "^3.0.0"
+
 "less@^4.1.1":
   "integrity" "sha512-w09o8tZFPThBscl5d0Ggp3RcrKIouBoQscnOMgFH3n5V3kN/CXGHNfCkRPtxJk6nKryDXaV9aHLK55RXuH4sAw=="
   "resolved" "https://registry.npmjs.org/less/-/less-4.1.1.tgz"
@@ -8995,6 +9047,18 @@
   dependencies:
     "semver" "^6.0.0"
 
+"make-plural@^4.3.0":
+  "integrity" "sha1-8j3gjv2wysLgybqfMVsN/2tMJzU="
+  "resolved" "https://registry.nlark.com/make-plural/download/make-plural-4.3.0.tgz"
+  "version" "4.3.0"
+  optionalDependencies:
+    "minimist" "^1.2.0"
+
+"make-plural@^6.2.2":
+  "integrity" "sha1-vrX9dRNV5yZg7rIhi7mO7JKFPGw="
+  "resolved" "https://registry.nlark.com/make-plural/download/make-plural-6.2.2.tgz"
+  "version" "6.2.2"
+
 "makeerror@1.0.x":
   "integrity" "sha1-4BpckQnyr3lmDk6LlYd5AYT1qWw="
   "resolved" "https://registry.npmjs.org/makeerror/-/makeerror-1.0.11.tgz"
@@ -9013,6 +9077,11 @@
   "version" "1.0.0"
   dependencies:
     "object-visit" "^1.0.0"
+
+"math-interval-parser@^2.0.1":
+  "integrity" "sha1-4izW0VoKf0wDrsVg23ZRPaYVvtQ="
+  "resolved" "https://registry.npm.taobao.org/math-interval-parser/download/math-interval-parser-2.0.1.tgz"
+  "version" "2.0.1"
 
 "md5.js@^1.3.4":
   "integrity" "sha512-xitP+WxNPcTTOgnTJcrhM0xvdPepipPSf3I8EIpGKeFLjt3PlJLIDG3u8EX53ZIubkb+5U2+3rELYpEhHhzdkg=="
@@ -9089,6 +9158,25 @@
   "integrity" "sha512-8q7VEgMJW4J8tcfVPy8g09NcQwZdbwFEqhe/WZkoIzjn/3TGDwtOCYtXGxA3O8tPzpczCCDgv+P2P5y00ZJOOg=="
   "resolved" "https://registry.npmjs.org/merge2/-/merge2-1.4.1.tgz"
   "version" "1.4.1"
+
+"messageformat-formatters@^2.0.1":
+  "integrity" "sha1-BJLBQCpId191HJsXwDVOkr4BKwg="
+  "resolved" "https://registry.nlark.com/messageformat-formatters/download/messageformat-formatters-2.0.1.tgz"
+  "version" "2.0.1"
+
+"messageformat-parser@^4.1.2":
+  "integrity" "sha1-uCR4f1f82n1Qdp9bY+jU/aaPW54="
+  "resolved" "https://registry.npm.taobao.org/messageformat-parser/download/messageformat-parser-4.1.3.tgz"
+  "version" "4.1.3"
+
+"messageformat@^2.3.0":
+  "integrity" "sha1-3iY8SQKdXq5l1+4l4HVPV/QlrZE="
+  "resolved" "https://registry.nlark.com/messageformat/download/messageformat-2.3.0.tgz"
+  "version" "2.3.0"
+  dependencies:
+    "make-plural" "^4.3.0"
+    "messageformat-formatters" "^2.0.1"
+    "messageformat-parser" "^4.1.2"
 
 "methods@^1.0.1", "methods@~1.1.2":
   "integrity" "sha1-VSmk1nZUE07cxSZmVoNbD4Ua/O4="
@@ -9397,6 +9485,11 @@
   "resolved" "https://registry.npmjs.org/mustache/-/mustache-3.2.1.tgz"
   "version" "3.2.1"
 
+"mustache@^4.0.1":
+  "integrity" "sha1-5YkjJNYKEuycKnM1ntylKXK/b2Q="
+  "resolved" "https://registry.npm.taobao.org/mustache/download/mustache-4.2.0.tgz"
+  "version" "4.2.0"
+
 "mute-stream@0.0.8":
   "integrity" "sha512-nnbWWOkoWyUsTjKrhgD0dcz22mdkSnpYqbEjIm2nhwhuxlSkpywJmBo8h0ZqJdkp73mb90SssHkN4rsRaBAfAA=="
   "resolved" "https://registry.npmjs.org/mute-stream/-/mute-stream-0.0.8.tgz"
@@ -9410,6 +9503,11 @@
     "any-promise" "^1.0.0"
     "object-assign" "^4.0.1"
     "thenify-all" "^1.0.0"
+
+"nan@^2.12.1":
+  "integrity" "sha512-8ZtvEnA2c5aYCZYd1cvgdnU6cqwixRoYg70xPLWUws5ORTa/lnw+u4amixRS/Ac5U5mQVgp9pnlSUnbNWFaWZQ=="
+  "resolved" "https://registry.npmjs.org/nan/-/nan-2.15.0.tgz"
+  "version" "2.15.0"
 
 "nanocolors@^0.1.5":
   "integrity" "sha512-8qaMI2gVxDmSUgoSXwWwkDDKxVePjhYaPIoy0e1xRMP52EAQINxGJ04GfyUPs+Z2g83RPwuHx+mBiaUFJGfTCA=="
@@ -9847,6 +9945,13 @@
   "integrity" "sha1-/7xJiDNuDoM94MFox+8VISGqf7M="
   "resolved" "https://registry.npmjs.org/os-homedir/-/os-homedir-1.0.2.tgz"
   "version" "1.0.2"
+
+"os-locale-s-fix@^1.0.8-fix-1":
+  "integrity" "sha1-fbT5/HzqKekmaQDqC8cqr/E/8Uo="
+  "resolved" "https://registry.npmmirror.com/os-locale-s-fix/download/os-locale-s-fix-1.0.8-fix-1.tgz"
+  "version" "1.0.8-fix-1"
+  dependencies:
+    "lcid" "^3.0.0"
 
 "os-tmpdir@^1.0.1", "os-tmpdir@~1.0.2":
   "integrity" "sha1-u+Z0BseaqFxc/sdm/lc0VV36EnQ="
@@ -12226,6 +12331,11 @@
   dependencies:
     "extend-shallow" "^3.0.0"
 
+"sprintf-js@^1.1.2":
+  "integrity" "sha1-2hdlJiv4wPVxdJ8q1sJjACB65nM="
+  "resolved" "https://registry.npm.taobao.org/sprintf-js/download/sprintf-js-1.1.2.tgz"
+  "version" "1.1.2"
+
 "sprintf-js@~1.0.2":
   "integrity" "sha1-BOaSb2YolTVPPdAVIDYzuFcpfiw="
   "resolved" "https://registry.npmjs.org/sprintf-js/-/sprintf-js-1.0.3.tgz"
@@ -12935,6 +13045,10 @@
     "has-bigints" "^1.0.1"
     "has-symbols" "^1.0.2"
     "which-boxed-primitive" "^1.0.2"
+
+"uniapp-weixin-ci@file:../uniapp-weixin-ci":
+  "resolved" "file:../uniapp-weixin-ci"
+  "version" "0.0.1"
 
 "unicode-canonical-property-names-ecmascript@^2.0.0":
   "integrity" "sha512-yY5PpDlfVIU5+y/BSCxAJRBIS1Zc2dDG3Ujq+sR0U+JjUevW2JhocOF+soROYDSaAezOzOKuyyixhD6mBknSmQ=="

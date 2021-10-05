@@ -160,3 +160,33 @@ npm install git+ssh://github.com/easterCat/kiana-js.git
 
 
 npm install &lt;folder&gt;
+
+### 8 npx wxci-public 报语法错误
+https://stackoverflow.com/questions/39585342/node-when-i-run-package-json-bin-command-give-me-syntax-error-near-unexp
+
+文件第一行指定运行环境 #!/usr/bin/env node
+
+### 9 npx执行包错 必须使用import加载ES模块
+```cmd
+Error [ERR_REQUIRE_ESM]: Must use import to load ES Module: D:\1024\web\uniapp-weixin-ci\node_modules\ora\index.js
+require() of ES modules is not supported.
+require() of D:\1024\web\uniapp-weixin-ci\node_modules\ora\index.js from D:\1024\web\uniapp-weixin-ci\src\index.js is an ES module file as it is a .js file whose nearest parent package.json contains "type": "module" which defines all .js files in that package scope as ES modules.
+```
+
+ora 使用 ^3.4.0 版本  
+log-symbols 使用 ^2.2.0
+
+### 重复的git tag 处理
+```cmd
+
+/ set tag and push remoteGitError: To github.com:thetime50/uniapp-ci.git
+=       refs/tags/0.0.3:refs/tags/0.0.3 [up to date]
+*       refs/tags/0.0.4:refs/tags/0.0.4 [new tag]
+!       refs/tags/0.0.1:refs/tags/0.0.1 [rejected] (already exists)
+!       refs/tags/0.0.2:refs/tags/0.0.2 [rejected] (already exists)
+Done
+Pushing to github.com:thetime50/uniapp-ci.git
+error: failed to push some refs to 'github.com:thetime50/uniapp-ci.git'
+hint: Updates were rejected because the tag already exists in the remote.
+```
+要把 git pull 移到版本检查前面
