@@ -41,6 +41,33 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 [ANSI转义序列](https://zh.wikipedia.org/wiki/ANSI%E8%BD%AC%E4%B9%89%E5%BA%8F%E5%88%97)  
 [依赖更新检查参考 check-outdated](https://github.com/jens-duttke/check-outdated/blob/main/helper/dependencies.js)
 
+// todo process
+
+### npm 生命周期
+[Life Cycle Operation Order](https://docs.npmjs.com/cli/v7/using-npm/scripts/#life-cycle-operation-order)  
+[NPM：常用命令的生命周期脚本](https://www.cnblogs.com/f1194361820/p/12509761.html)
+- **npm publish**  
+prepublish > prepare > prepublishOnly > publish > postpublish    
+- **npm pack**    
+prepare > prepack > postpack    
+- **npm install**    
+prepare > preinstall > install > postinstall    
+- **npm uninstall**    
+preuninstall > uninstall > postuninstall    
+  
+- **npm version**  
+preversion > version > postversion    
+  
+- **npm test**  
+pretest > test > posttest    
+- **npm start**    
+prestart > start > poststart    
+- **npm stop**    
+prestop > stop > poststop    
+- **npm restart**    
+prerestart > restart > postrestart    
+- **npm shinkwrap**    
+preshinkwrap > shinkwrap > postshinkwrap  
 ### git
 
 git-repo
