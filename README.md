@@ -41,6 +41,10 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 [ANSI转义序列](https://zh.wikipedia.org/wiki/ANSI%E8%BD%AC%E4%B9%89%E5%BA%8F%E5%88%97)  
 [依赖更新检查参考 check-outdated](https://github.com/jens-duttke/check-outdated/blob/main/helper/dependencies.js)
 
+[commander.js](https://github.com/tj/commander.js/blob/HEAD/Readme_zh-CN.md)
+
+[nodejs process](https://nodejs.org/api/process.html)
+
 // todo process
 
 ### npm 生命周期
