@@ -221,3 +221,16 @@ error: failed to push some refs to 'github.com:thetime50/uniapp-ci.git'
 hint: Updates were rejected because the tag already exists in the remote.
 ```
 要把 git pull 移到版本检查前面
+
+### npm 发布报错
+
+发布前删除淘宝源
+```cmd
+npm config delete registry
+npm config delete disturl
+```
+
+设置淘宝源
+```cmd
+npm config set registry http://registry.npm.taobao.org/
+```
