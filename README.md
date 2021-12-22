@@ -50,6 +50,13 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 ### npm 生命周期
 [Life Cycle Operation Order](https://docs.npmjs.com/cli/v7/using-npm/scripts/#life-cycle-operation-order)  
 [NPM：常用命令的生命周期脚本](https://www.cnblogs.com/f1194361820/p/12509761.html)
+
+调试过程中查看打印信息
+```cmd
+npm install -D --foreground-scripts ../uniapp-weixin-ci
+npm uninstall -D --foreground-scripts uniapp-weixin-ci
+```
+
 - **npm publish**  
 prepublish > prepare > prepublishOnly > publish > postpublish    
 - **npm pack**    
@@ -58,7 +65,11 @@ prepare > prepack > postpack
 prepare > preinstall > install > postinstall    
 - **npm uninstall**    
 preuninstall > uninstall > postuninstall    
-  
+
+
+// https://docs.npmjs.com/cli/v7/using-npm/scripts#a-note-on-a-lack-of-npm-uninstall-scripts
+// npm v6 有uninstall生命周期脚本，但 npm v7 没有
+
 - **npm version**  
 preversion > version > postversion    
   
@@ -72,6 +83,9 @@ prestop > stop > poststop
 prerestart > restart > postrestart    
 - **npm shinkwrap**    
 preshinkwrap > shinkwrap > postshinkwrap  
+
+
+
 ### git
 
 git-repo
@@ -147,7 +161,7 @@ transpileDependencies无效怎么办
 
 ### 3 git relog
 
-git rtelog命令查看操作历史还原reset命令删除的提交
+git relog命令查看操作历史, git checkout \[hash] -b \[branch] 还原reset命令删除的提交
 
 ### 4 导入manifest.json 报错
 require('./src/manifest.json')报错  
@@ -158,7 +172,7 @@ require('./src/manifest.json')报错
 [如何在Github上删除Release或Tag](https://www.maixj.net/ict/release-tag-22821)
 
 ### 6 使用nodegit 报错
-使用nodegit 报错
+使用 nodegit 安装时报错
 ```cmd
 npm ERR! code 1
 npm ERR! path D:\1024\web\test\node_modules\nodegit

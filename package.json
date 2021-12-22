@@ -40,7 +40,8 @@
     "test:ios": "cross-env UNI_PLATFORM=app-plus UNI_OS_NAME=ios jest -i",
     "test:mp-baidu": "cross-env UNI_PLATFORM=mp-baidu jest -i",
     "test:mp-weixin": "cross-env UNI_PLATFORM=mp-weixin jest -i",
-    "ci-publish": "node ci-publish.js"
+    "ci-publish": "node ci-publish.js",
+    "wxci-publish": "npx wxci-publish"
   },
   "dependencies": {
     "@dcloudio/uni-app-plus": "^2.0.0-32920210927001",
@@ -99,7 +100,7 @@
     "sass-loader": "10.1.1",
     "simple-git": "^2.45.1",
     "text-table": "^0.2.0",
-    "uniapp-weixin-ci": "file:../uniapp-weixin-ci",
+    "uniapp-weixin-ci": "^0.1.1",
     "vue-template-compiler": "^2.6.11"
   },
   "browserslist": [

@@ -13046,9 +13046,10 @@
     "has-symbols" "^1.0.2"
     "which-boxed-primitive" "^1.0.2"
 
-"uniapp-weixin-ci@file:../uniapp-weixin-ci":
-  "resolved" "file:../uniapp-weixin-ci"
-  "version" "0.0.1"
+"uniapp-weixin-ci@^0.1.1":
+  "integrity" "sha512-u40L0MOz+4tgEoGWqNBBaXIm1XMQYFjJwIaGQls3kSIIjD+414msfnrqrJqx1e/5deM3iulp+vvHofh+N5+q1A=="
+  "resolved" "https://registry.npmjs.org/uniapp-weixin-ci/-/uniapp-weixin-ci-0.1.1.tgz"
+  "version" "0.1.1"
 
 "unicode-canonical-property-names-ecmascript@^2.0.0":
   "integrity" "sha512-yY5PpDlfVIU5+y/BSCxAJRBIS1Zc2dDG3Ujq+sR0U+JjUevW2JhocOF+soROYDSaAezOzOKuyyixhD6mBknSmQ=="
