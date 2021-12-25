@@ -171,6 +171,22 @@ require('./src/manifest.json')报错
 ### 5 如何在Github上删除Release或Tag
 [如何在Github上删除Release或Tag](https://www.maixj.net/ict/release-tag-22821)
 
+```cmd
+::删除本地tag
+git tag -d <tagname>
+
+::删除远端tag
+git push origin --delete <tagname>
+
+::向远端推送本地tag
+git push origin <tagname>
+
+::向远端推送本地所有tag
+git push origin --tags
+
+```
+
+
 ### 6 使用nodegit 报错
 使用 nodegit 安装时报错
 ```cmd
